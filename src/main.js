@@ -1,24 +1,45 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+import './style.css';
+import { auth, db } from './firebase.js';
 
+// Préparation de l'écran de contrôle
 document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
+  <div style="padding: 30px; font-family: sans-serif; background: #111; color: white; min-height: 100vh;">
+    <h1>🐐 Système de Diagnostic Cine-Goat</h1>
+    <ul id="log" style="font-size: 1.2rem; line-height: 2; list-style: none; padding: 0;"></ul>
   </div>
-`
+`;
 
-setupCounter(document.querySelector('#counter'))
+const logEl = document.getElementById('log');
+const printLog = (msg, isOk) => {
+  logEl.innerHTML += `<li style="color: ${isOk ? '#4ade80' : '#f87171'}">${isOk ? '✅' : '❌'} ${msg}</li>`;
+};
+
+// 1. Test du fichier .env
+const tmdbKey = import.meta.env.VITE_TMDB_API_KEY;
+if (tmdbKey && tmdbKey.length > 10) {
+  printLog("Clé TMDB détectée dans le .env", true);
+} else {
+  printLog("Clé TMDB absente ou invalide dans le .env", false);
+}
+
+// 2. Test de Firebase
+if (auth && db) {
+  printLog("Firebase (Auth & Database) initialisé avec succès", true);
+} else {
+  printLog("Erreur : Impossible de charger Firebase", false);
+}
+
+// 3. Test de l'API Films (TMDB)
+if (tmdbKey) {
+  fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${tmdbKey}&language=fr-FR`)
+    .then(res => {
+      if (!res.ok) throw new Error("Clé refusée");
+      return res.json();
+    })
+    .then(data => {
+      if (data.results && data.results.length > 0) {
+        printLog(`Connexion TMDB réussie ! (Film N°1 actuel : "${data.results[0].title}")`, true);
+      }
+    })
+    .catch(() => printLog("L'API TMDB a refusé la connexion (Vérifie ta clé VITE_TMDB_API_KEY)", false));
+}
