@@ -3,9 +3,10 @@ import { auth, db } from "./config/firebase.js";
 import { createMovieCard } from "./components/moviecard.js";
 import { getTrendingMovies } from "./api/tmdb.js";
 
-async function initHome() {
+async function initTrending() {
   const movie_grid = document.getElementById("movies_grid");
   const movies = await getTrendingMovies();
+
   movies.forEach((movie) => {
     const card = createMovieCard(movie);
     movie_grid.appendChild(card);
@@ -65,4 +66,4 @@ if (tmdbKey) {
     );
 }*/
 
-initHome();
+initTrending();
