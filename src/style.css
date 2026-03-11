@@ -1,0 +1,40 @@
+body {
+  font-family: Arial;
+}
+
+#movies_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.movie-card {
+  background-color: darkgray;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+.movie-card img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.movie-card h1,
+p {
+  color: white;
+}
+
+.movie-card h1 {
+  font-size: 18px;
+}
+
+.movie-card p {
+  font-size: 14px;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+  opacity: 0.8;
+}
