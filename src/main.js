@@ -1,6 +1,17 @@
 import "./style.css";
 import { auth, db } from "./config/firebase.js";
+import { createMovieCard } from "./components/moviecard.js";
+import { getTrendingMovies } from "./api/tmdb.js";
 
+async function initHome() {
+  const movie_grid = document.getElementById("movies_grid");
+  const movies = await getTrendingMovies();
+  movies.forEach((movie) => {
+    const card = createMovieCard(movie);
+    movie_grid.appendChild(card);
+  });
+}
+/*
 // Préparation de l'écran de contrôle
 document.querySelector("#app").innerHTML = `
   <div style="padding: 30px; font-family: sans-serif; background: #111; color: white; min-height: 100vh;">
@@ -52,4 +63,6 @@ if (tmdbKey) {
         false,
       ),
     );
-}
+}*/
+
+initHome();
