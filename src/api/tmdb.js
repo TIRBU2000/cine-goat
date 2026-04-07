@@ -26,7 +26,7 @@ export async function searchMovies(query){
     return [];
 
 
-  }
+  }}
 
 
 export async function getMovieDetails(movieID) {

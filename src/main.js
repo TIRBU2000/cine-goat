@@ -1,8 +1,7 @@
 import "./style.css";
 import { auth, db } from "./config/firebase.js";
 import { createMovieCard } from "./components/moviecard.js";
-import { getTrendingMovies, searchMovies } from "./api/tmdb.js";
-import { getTrendingMovies, getMovieDetails } from "./api/tmdb.js";
+import { getTrendingMovies, getMovieDetails, searchMovies } from "./api/tmdb.js";
 import { createMovieDetails } from "./components/movieDetails.js";
 
 async function initTrending() {
@@ -13,6 +12,27 @@ async function initTrending() {
     const card = createMovieCard(movie);
     movie_grid.appendChild(card);
   });
+
+
+  
+const search_btn = document.getElementById("search_btn"); 
+const search_input = document.getElementById("search_input") ; 
+
+search_btn.addEventListener("click", async () => {
+  
+  const query = search_input.value ;   
+  if (query != ""){
+    const movies = await searchMovies(query) ; 
+    console.log("Films trouvés :", movies)
+  
+  const movie_grid = document.getElementById("movies_grid") ; 
+  movie_grid.innerHTML = "" ; 
+  movies.forEach((movie)=>{
+    const card = createMovieCard(movie); 
+    movie_grid.appendChild(card) ; 
+  })
+  }
+})
 
   const gridSection = document.getElementById("movies_grid");
   const detailsSection = document.getElementById("movie-details-section");
@@ -44,36 +64,8 @@ async function initTrending() {
   });
 }
 
-/*
-// Préparation de l'écran de contrôle
-document.querySelector("#app").innerHTML = `
-  <div style="padding: 30px; font-family: sans-serif; background: #111; color: white; min-height: 100vh;">
-    <h1>🐐 Système de Diagnostic Cine-Goat</h1>
-    <ul id="log" style="font-size: 1.2rem; line-height: 2; list-style: none; padding: 0;"></ul>
-  </div>
-`;
 
 
-const search_btn = document.getElementById("search_btn"); 
-const search_input = document.getElementById("search_input") ; 
 
-search_btn.addEventListener("click", async () => {
-  
-  const query = search_input.value ;   
-  if (query != ""){
-    const movies = await searchMovies(query) ; 
-    console.log("Films trouvés :", movies)
-  
-  const movie_grid = document.getElementById("movies_grid") ; 
-  movie_grid.innerHTML = "" ; 
-  movies.forEach((movie)=>{
-    const card = createMovieCard(movie); 
-    movie_grid.appendChild(card) ; 
-
-
-  })
-
-  }
-})
 
 initTrending();
