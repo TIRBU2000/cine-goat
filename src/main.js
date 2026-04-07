@@ -1,8 +1,11 @@
 import "./style.css";
 import { auth, db } from "./config/firebase.js";
 import { createMovieCard } from "./components/moviecard.js";
-import { getTrendingMovies, searchMovies } from "./api/tmdb.js";
-import { getTrendingMovies, getMovieDetails } from "./api/tmdb.js";
+import {
+  getTrendingMovies,
+  searchMovies,
+  getMovieDetails,
+} from "./api/tmdb.js";
 import { createMovieDetails } from "./components/movieDetails.js";
 
 async function initTrending() {
@@ -14,66 +17,53 @@ async function initTrending() {
     movie_grid.appendChild(card);
   });
 
+  const search_btn = document.getElementById("search_btn");
+  const search_input = document.getElementById("search_input");
+
+  search_btn.addEventListener("click", async () => {
+    const query = search_input.value;
+    if (query != "") {
+      const search_results = await searchMovies(query);
+      console.log("Films trouvés :", search_results);
+
+      const movie_grid = document.getElementById("movies_grid");
+      movie_grid.innerHTML = "";
+
+      search_results.forEach((movie) => {
+        const card = createMovieCard(movie);
+        movie_grid.appendChild(card);
+      });
+    }
+  });
+
   const gridSection = document.getElementById("movies_grid");
   const detailsSection = document.getElementById("movie-details-section");
 
-  const allCards = document.querySelectorAll(".movie-card");
+  gridSection.addEventListener("click", async (event) => {
+    const clickedCard = event.target.closest(".movie-card");
 
-  allCards.forEach((card) => {
-    card.addEventListener("click", async (event) => {
-      const movieId = event.currentTarget.dataset.movieId;
+    if (!clickedCard) return;
 
-      gridSection.style.display = "none";
-      detailsSection.style.display = "block";
+    const movieId = clickedCard.dataset.movieId;
 
-      detailsSection.innerHTML = "<p>Chargement des détails...</p>";
+    gridSection.style.display = "none";
+    detailsSection.style.display = "block";
 
-      const movieDetails = await getMovieDetails(movieId);
+    detailsSection.innerHTML = "<p>Chargement des détails...</p>";
 
-      const detailsContent = createMovieDetails(movieDetails);
+    const movieDetails = await getMovieDetails(movieId);
 
-      detailsSection.innerHTML = "";
-      detailsSection.appendChild(detailsContent);
+    const detailsContent = createMovieDetails(movieDetails);
 
-      const backBtn = document.getElementById("back-btn");
-      backBtn.addEventListener("click", () => {
-        detailsSection.style.display = "none";
-        gridSection.style.display = "grid";
-      });
+    detailsSection.innerHTML = "";
+    detailsSection.appendChild(detailsContent);
+
+    const backBtn = document.getElementById("back-btn");
+    backBtn.addEventListener("click", () => {
+      detailsSection.style.display = "none";
+      gridSection.style.display = "grid";
     });
   });
 }
-
-/*
-// Préparation de l'écran de contrôle
-document.querySelector("#app").innerHTML = `
-  <div style="padding: 30px; font-family: sans-serif; background: #111; color: white; min-height: 100vh;">
-    <h1>🐐 Système de Diagnostic Cine-Goat</h1>
-    <ul id="log" style="font-size: 1.2rem; line-height: 2; list-style: none; padding: 0;"></ul>
-  </div>
-`;
-
-
-const search_btn = document.getElementById("search_btn"); 
-const search_input = document.getElementById("search_input") ; 
-
-search_btn.addEventListener("click", async () => {
-  
-  const query = search_input.value ;   
-  if (query != ""){
-    const movies = await searchMovies(query) ; 
-    console.log("Films trouvés :", movies)
-  
-  const movie_grid = document.getElementById("movies_grid") ; 
-  movie_grid.innerHTML = "" ; 
-  movies.forEach((movie)=>{
-    const card = createMovieCard(movie); 
-    movie_grid.appendChild(card) ; 
-
-
-  })
-
-  }
-})
 
 initTrending();
