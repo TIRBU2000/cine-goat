@@ -17,6 +17,9 @@ const firebaseConfig = {
 // Initialisation de Firebase
 const app = initializeApp(firebaseConfig);
 
+//test
+console.log("🔥 Firebase est bien connecté au projet :", app.options.projectId);
+
 // On exporte l'Auth et la DB pour pouvoir les utiliser dans tout le projet
 export const auth = getAuth(app);
 export const db = getFirestore(app);
