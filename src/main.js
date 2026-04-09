@@ -1,7 +1,11 @@
 import "./style.css";
 import { auth, db } from "./config/firebase.js";
 import { createMovieCard } from "./components/moviecard.js";
-import { getTrendingMovies, getMovieDetails, searchMovies } from "./api/tmdb.js";
+import {
+  getTrendingMovies,
+  searchMovies,
+  getMovieDetails,
+} from "./api/tmdb.js";
 import { createMovieDetails } from "./components/movieDetails.js";
 
 async function initTrending() {
@@ -37,35 +41,31 @@ search_btn.addEventListener("click", async () => {
   const gridSection = document.getElementById("movies_grid");
   const detailsSection = document.getElementById("movie-details-section");
 
-  const allCards = document.querySelectorAll(".movie-card");
+  gridSection.addEventListener("click", async (event) => {
+    const clickedCard = event.target.closest(".movie-card");
 
-  allCards.forEach((card) => {
-    card.addEventListener("click", async (event) => {
-      const movieId = event.currentTarget.dataset.movieId;
+    if (!clickedCard) return;
 
-      gridSection.style.display = "none";
-      detailsSection.style.display = "block";
+    const movieId = clickedCard.dataset.movieId;
 
-      detailsSection.innerHTML = "<p>Chargement des détails...</p>";
+    gridSection.style.display = "none";
+    detailsSection.style.display = "block";
 
-      const movieDetails = await getMovieDetails(movieId);
+    detailsSection.innerHTML = "<p>Chargement des détails...</p>";
 
-      const detailsContent = createMovieDetails(movieDetails);
+    const movieDetails = await getMovieDetails(movieId);
 
-      detailsSection.innerHTML = "";
-      detailsSection.appendChild(detailsContent);
+    const detailsContent = createMovieDetails(movieDetails);
 
-      const backBtn = document.getElementById("back-btn");
-      backBtn.addEventListener("click", () => {
-        detailsSection.style.display = "none";
-        gridSection.style.display = "grid";
-      });
+    detailsSection.innerHTML = "";
+    detailsSection.appendChild(detailsContent);
+
+    const backBtn = document.getElementById("back-btn");
+    backBtn.addEventListener("click", () => {
+      detailsSection.style.display = "none";
+      gridSection.style.display = "grid";
     });
   });
 }
-
-
-
-
 
 initTrending();
