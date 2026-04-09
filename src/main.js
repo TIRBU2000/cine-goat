@@ -1,12 +1,22 @@
 import "./style.css";
+
 import { auth, db } from "./config/firebase.js";
+
 import { createMovieCard } from "./components/moviecard.js";
+
+
 import {
   getTrendingMovies,
   searchMovies,
   getMovieDetails,
 } from "./api/tmdb.js";
+
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
 import { createMovieDetails } from "./components/movieDetails.js";
+
+
+import { add } from "firebase/firestore/pipelines";
 
 async function initTrending() {
   const movie_grid = document.getElementById("movies_grid");
@@ -66,6 +76,96 @@ search_btn.addEventListener("click", async () => {
       gridSection.style.display = "grid";
     });
   });
+
+  const aller_log_btn = document.getElementById("aller_log_btn") ; 
+  const authSection = document.getElementById("auth-section") ; 
+  const retour_btn = document.getElementById("retour-btn") ; 
+  const search = document.querySelector(".search-section") ; 
+  const message_reussi  = document.getElementById("message_r") ; 
+  const message_echoue  = document.getElementById("message_e") ; 
+
+  const btn_m_reussi = document.getElementById("fermer-message-r")
+  const btn_m_echoue = document.getElementById("fermer-message-e")
+
+    btn_m_reussi.addEventListener("click", async()=>{
+      message_reussi.style.display = "none" ; 
+
+    })
+    btn_m_echoue.addEventListener("click", async()=>{
+      message_echoue.style.display = "none" ; 
+
+    })
+
+    aller_log_btn.addEventListener("click", async()=>{
+    gridSection.style.display = "none" ; 
+    search.style.display = "none" ; 
+    authSection.style.display = "block" ; 
+
+  })
+  
+    retour_btn.addEventListener("click", async()=>{
+    authSection.style.display = "none" ; 
+    search.style.display = "block" ; 
+    gridSection.style.display = "grid" ;
+  })
+
+  
+
+
+  const login_btn = document.getElementById("login-btn") ; 
+  const signup_btn = document.getElementById("signup-btn") ; 
+
+  signup_btn.addEventListener("click", async () => {
+  
+  
+  const email_in = document.getElementById("auth-email").value;
+  const mot_de_passe_in = document.getElementById("auth-password").value; 
+
+
+  try {
+    
+    const reponse = await createUserWithEmailAndPassword(auth, email_in, mot_de_passe_in);
+    
+    console.log("Compte créé avec succès !", reponse.user);
+    retour_btn.click() ; 
+    message_reussi.style.display = "flex" ; 
+
+  } catch (error) {
+    
+    retour_btn.click() ; 
+    message_echoue.style.display = "flex" ; 
+    console.error("Firebase a refusé l'inscription :", error.message);
+  }
+
 }
+
+);
+
+
+
+
+
+
+
+
+  login_btn.addEventListener("click", async()=>{
+
+    if ((mail != "") & (mdp != "")){
+      
+
+
+    }
+
+
+  })
+
+
+
+
+}
+
+
+
+
 
 initTrending();
