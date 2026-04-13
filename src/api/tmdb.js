@@ -23,10 +23,8 @@ export async function searchMovies(query) {
   } catch (error) {
     console.error("Erreur avec l'API TMDB : ", error);
     return [];
-
-
-  }}
-
+  }
+}
 
 export async function getMovieDetails(movieID) {
   try {

@@ -38,6 +38,52 @@ p {
   transition: transform 0.3s ease;
   opacity: 0.8;
 }
+
+/* --- NOTIFICATION FLOTTANTE --- */
+
+.message-box-r {
+  position: fixed; /* C'est ça la magie : ça flotte au-dessus du reste ! */
+  bottom: 20px;
+  right: 20px;
+  background-color: #4CAF50; /* Vert de validation */
+  color: white; 
+  padding: 15px 25px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  z-index: 1000; 
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+} 
+
+.message-box-e {
+  position: fixed; /* C'est ça la magie : ça flotte au-dessus du reste ! */
+  bottom: 20px;
+  right: 20px;
+  background-color: #df0404; /* Vert de validation */
+  color: white; 
+  padding: 15px 25px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  z-index: 1000; 
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+} 
+/* Le bouton croix */
+#fermer-message-r, #fermer-message-e {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#fermer-message-r:hover, #fermer-message-e:hover {
+  color: #ccc;
+}
+
 /* --- PAGE DÉTAILS --- */
 
 #movie-details-section {
