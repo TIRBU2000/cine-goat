@@ -7,7 +7,7 @@ export function createMovieCard(movie) {
   const card = document.createElement("div");
   card.className = "movie-card";
   card.dataset.movieId = movieID;
-  card.innerHTML = `<h1>${title}</h1><p>Note moyenne : ${avgRating}</p><p>Date de sortie : ${releaseDate}</p><img src="${image}" alt="${title}">`;
+  card.innerHTML = `<div class="card-content"><h1>${title}</h1><p>Note moyenne : ${avgRating}</p><p>Date de sortie : ${releaseDate}</p><img src="${image}" alt="${title}"></div>`;
 
   return card;
 }

@@ -18,6 +18,9 @@ import { add } from "firebase/firestore/pipelines";
 async function initTrending() {
   const movie_grid = document.getElementById("movies_grid");
   const movies = await getTrendingMovies();
+  const sectionTitle = document.querySelector(".section-title");
+  const searchTitle = document.querySelector(".search-title");
+
 
   movies.forEach((movie) => {
     const card = createMovieCard(movie);
@@ -32,6 +35,8 @@ async function initTrending() {
     if (query != "") {
       const search_results = await searchMovies(query);
       console.log("Films trouvés :", search_results);
+      sectionTitle.style.display = "none";
+      searchTitle.style.display = "block";
 
       const movie_grid = document.getElementById("movies_grid");
       movie_grid.innerHTML = "";
@@ -55,6 +60,9 @@ async function initTrending() {
 
     gridSection.style.display = "none";
     detailsSection.style.display = "block";
+    sectionTitle.style.display = "none";
+    searchTitle.style.display = "none";
+
 
     detailsSection.innerHTML = "<p>Chargement des détails...</p>";
 
@@ -69,6 +77,8 @@ async function initTrending() {
     backBtn.addEventListener("click", () => {
       detailsSection.style.display = "none";
       gridSection.style.display = "grid";
+      sectionTitle.style.display = "none";
+      searchTitle.style.display = "block";
     });
   });
 
@@ -93,17 +103,49 @@ async function initTrending() {
 
     aller_log_btn.addEventListener("click", async()=>{
     gridSection.style.display = "none" ; 
+    sectionTitle.style.display = "none";
     search.style.display = "none" ; 
+    searchTitle.style.display = "none";
     authSection.style.display = "block" ; 
 
   })
   
     retour_btn.addEventListener("click", async()=>{
     authSection.style.display = "none" ; 
-    search.style.display = "block" ; 
+    search.style.display = "flex" ; 
     gridSection.style.display = "grid" ;
+    sectionTitle.style.display = "block";
+    searchTitle.style.display = "none";
   })
+  const logo = document.getElementById("logo");
+  
+  logo.addEventListener("click", async () => {
+    
+    
+    document.getElementById("auth-section").style.display = "none"; 
+    document.getElementById("movie-details-section").style.display = "none";
+    document.querySelector(".search-section").style.display = "flex"; 
+    document.getElementById("movies_grid").style.display = "grid";
+    
+    
+    sectionTitle.style.display = "block"; 
+    searchTitle.style.display = "none";   
 
+    
+    const search_input = document.getElementById("search_input");
+    search_input.value = ""; 
+
+   
+    const movie_grid = document.getElementById("movies_grid");
+    movie_grid.innerHTML = "";
+
+   
+    const movies = await getTrendingMovies();
+    movies.forEach((movie) => {
+      const card = createMovieCard(movie);
+      movie_grid.appendChild(card);
+    });
+  });
   
 
 

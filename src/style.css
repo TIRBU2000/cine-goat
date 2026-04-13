@@ -1,52 +1,115 @@
-body {
-  font-family: Arial;
+:root{
+  --bg-color: #0b0f19;       
+  --surface-color: #151c2c;  
+  --surface-hover: #1e293b;  
+
+  
+  --primary-color: #3b82f6;  
+  --primary-hover: #2563eb;  
+  --danger-color: #ef4444;   
+  --success-color: #10b981;  
+
+  
+  --text-main: #f8fafc;      
+  --text-muted: #94a3b8;
+  --font-main: 'Poppins', sans-serif;
 }
 
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  margin: 0;
+}
+/* Le titre de la page */
+.section-title {
+  font-size: 1.8rem;
+  margin: 20px 30px;
+  color: var(--text-main);
+  border-left: 5px solid var(--primary-color);
+  padding-left: 15px;
+}
+
+.search-title{
+  font-size: 1.8rem;
+  margin: 20px 30px;
+  color: var(--text-main);
+  border-left: 5px solid var(--primary-color);
+  padding-left: 15px;
+}
+
+/* La grille d'affichage */
 #movies_grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
-  padding: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Cartes un peu plus grandes */
+  gap: 30px;
+  padding: 0 30px 40px 30px;
 }
 
+/* --- LA CARTE PREMIUM --- */
 .movie-card {
-  background-color: darkgray;
-  border-radius: 8px;
-  padding: 10px;
+  background-color: var(--surface-color);
+  border-radius: 12px;
+  padding: 0; /* On enlève le padding pour que l'image touche les bords ! */
   text-align: center;
+  overflow: hidden; /* Empêche l'image de dépasser des bords arrondis */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  border: 1px solid transparent; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
+
+/* L'affiche du film */
 .movie-card img {
   width: 100%;
-  border-radius: 4px;
+  aspect-ratio: 2 / 3; /* Force le format affiche de ciné */
+  object-fit: cover; 
+  border-bottom: 2px solid var(--primary-color); /* Ligne bleue de séparation */
 }
 
-.movie-card h1,
-p {
-  color: white;
+/* La nouvelle zone de texte sous l'image */
+.card-content {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Aligne toutes les cartes même si les titres font des tailles différentes */
+  justify-content: center;
 }
 
 .movie-card h1 {
-  font-size: 18px;
+  font-size: 1.1rem;
+  color: var(--text-main);
+  margin: 0 0 8px 0;
+  /* Coupe un titre trop long avec des "..." */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; 
 }
 
 .movie-card p {
-  font-size: 14px;
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin: 0;
+  font-weight: 600;
 }
 
+/* --- LE SURVOL --- */
 .movie-card:hover {
-  transform: scale(1.05);
-  transition: transform 0.3s ease;
-  opacity: 0.8;
+  transform: translateY(-8px); /* La carte se soulève */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6); 
+  border-color: var(--primary-color); 
 }
 
 /* --- NOTIFICATION FLOTTANTE --- */
 
 .message-box-r {
-  position: fixed; /* C'est ça la magie : ça flotte au-dessus du reste ! */
+  position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #4CAF50; /* Vert de validation */
-  color: white; 
+  background-color: var(--success-color); /* ICI */
+  color: var(--text-main); 
   padding: 15px 25px;
   border-radius: 8px;
   display: flex;
@@ -54,14 +117,14 @@ p {
   gap: 20px;
   z-index: 1000; 
   box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-} 
+}
 
 .message-box-e {
-  position: fixed; /* C'est ça la magie : ça flotte au-dessus du reste ! */
+  position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #df0404; /* Vert de validation */
-  color: white; 
+  background-color: var(--danger-color); /* ICI */
+  color: var(--text-main); 
   padding: 15px 25px;
   border-radius: 8px;
   display: flex;
@@ -69,7 +132,7 @@ p {
   gap: 20px;
   z-index: 1000; 
   box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-} 
+}
 /* Le bouton croix */
 #fermer-message-r, #fermer-message-e {
   background: none;
@@ -90,12 +153,12 @@ p {
   max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
-  color: white;
+  
 }
 
 #back-btn {
-  background-color: #e50914; /* Petit rouge cinéma */
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--text-main);
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -106,18 +169,17 @@ p {
 }
 
 #back-btn:hover {
-  background-color: #b20710;
+  background-color: var(--primary-hover);
 }
 
 .details-layout {
   display: flex;
-  flex-direction: column; /* Sur mobile : image en haut, texte en bas */
+  flex-direction: column;
   gap: 30px;
-  background-color: #222;
+  background-color: var(--surface-color); 
   padding: 30px;
   border-radius: 12px;
 }
-
 /* Sur écran d'ordinateur : image à gauche, texte à droite */
 @media (min-width: 768px) {
   .details-layout {
@@ -147,4 +209,195 @@ p {
 .overview {
   margin-top: 20px;
   line-height: 1.6;
+}
+
+
+.search-section {
+  background-color: var(--surface-color);
+  display: flex;
+  justify-content: space-between; /* Pousse les 3 blocs (logo, recherche, auth) aux extrémités */
+  align-items: center;
+  padding: 15px 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); /* Belle ombre sous la navbar */
+  position: sticky; /* Optionnel mais très pro : la barre reste collée en haut quand on scrolle ! */
+  top: 0;
+  z-index: 100; /* S'assure que la barre passe par-dessus les films */
+}
+
+/* 1. Le Logo */
+.logo {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  margin: 0;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+.logo span {
+  color: var(--text-main); /* Le mot "GOAT" en blanc, "Ciné" en bleu */
+}
+
+/* 2. La Recherche */
+.search-container {
+  display: flex;
+  gap: 10px;
+  flex-grow: 1; /* Permet à la barre de prendre l'espace disponible */
+  max-width: 500px; /* Mais pas trop large non plus */
+  margin: 0 30px;
+}
+
+#search_input {
+  flex-grow: 1;
+  padding: 12px 20px;
+  border: 1px solid transparent;
+  border-radius: 30px; /* Effet pilule hyper moderne */
+  background-color: var(--bg-color); /* On "creuse" l'input avec la couleur de fond */
+  color: var(--text-main);
+  font-family: var(--font-main);
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+#search_input:focus {
+  border-color: var(--primary-color); /* S'allume en bleu quand on clique dedans */
+}
+
+#search_btn {
+  border-radius: 50%; /* Un bouton de recherche tout rond */
+  width: 45px;
+  height: 45px;
+  border: none;
+  background-color: var(--primary-color);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+#search_btn:hover {
+  background-color: var(--primary-hover);
+  transform: scale(1.05);
+}
+
+/* 3. Zone Utilisateur (Droite) */
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+#aller_log_btn {
+  background-color: transparent;
+  color: var(--text-main);
+  border: 2px solid var(--primary-color); /* Style "outline" chic */
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: var(--font-main);
+  transition: background-color 0.3s;
+}
+
+#aller_log_btn:hover {
+  background-color: var(--primary-color);
+}
+
+/* Le fameux point rouge (nettoyé) */
+.status-dot {
+  height: 12px;
+  width: 12px;
+  background-color: var(--danger-color); /* Rouge = non connecté */
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 8px var(--danger-color); /* Petit effet néon ! */
+}
+
+
+#auth-section {
+  background-color: var(--surface-color); 
+  max-width: 400px;
+  margin: 80px auto; 
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7); 
+}
+
+#auth-section h2 {
+  margin-top: 0;
+  margin-bottom: 30px;
+  color: var(--text-main);
+}
+
+
+#auth-section input {
+  width: 100%;
+  box-sizing: border-box; 
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: var(--bg-color); 
+  border: 1px solid #333; 
+  border-radius: 8px;
+  color: var(--text-main);
+  font-family: var(--font-main);
+  font-size: 1rem;
+  outline: none; 
+  transition: border 0.3s ease; 
+}
+
+
+#auth-section input:focus {
+  border: 1px solid var(--primary-color); 
+}
+
+
+#auth-section button {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: var(--font-main);
+  transition: background 0.3s, transform 0.1s;
+}
+
+#auth-section button:active {
+  transform: scale(0.98);
+}
+
+
+#login-btn {
+  background-color: var(--primary-color);
+  color: var(--text-main);
+}
+
+#login-btn:hover {
+  background-color: var(--primary-hover);
+}
+
+
+#signup-btn {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+}
+
+#signup-btn:hover {
+  background-color: var(--primary-color);
+  color: var(--text-main);
+}
+
+
+#retour-btn {
+  background-color: transparent;
+  color: var(--text-muted);
+  margin-bottom: 0;
+  padding: 5px;
+}
+
+#retour-btn:hover {
+  color: var(--text-main);
+  text-decoration: underline;
 }

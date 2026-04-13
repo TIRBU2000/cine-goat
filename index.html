@@ -1,49 +1,63 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>cine-goat</title>
-  </head>
-  <body>
-    <div id="app">
-      
-      <div class="search-section">
-        <input
-          id="search_input"
-          type="text"
-          placeholder="Entrez le nom d'un film"
-        />
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <title>cine-goat</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1 id="logo" class="logo">Ciné<span>GOAT</span></h1>
+    <nav class="search-section">
+
+
+      <div class="search-container">
+        <input id="search_input" type="text" placeholder="Rechercher un film..." />
         <button id="search_btn">🔎</button>
-
-        <button id="aller_log_btn">Log In/Sign Up</button>
-        <span id="auth-status-dot" style="height: 10px; width: 10px; background-color: red; border-radius: 50%; display: inline-block; margin-right: 5px;"></span>
       </div>
-      <div id="movies_grid"></div>
-      <div id="movie-details-section" style="display: none"></div>
-    </div>
 
-    <div id="auth-section" style="display : none;"> <h2>Espace Utilisateur</h2>
-    
-    <input type ="email" id= "auth-email" placeholder="adresse email">
-    <input type ="password" id = "auth-password" placeholder = "mot de passe">
+      <div class="user-actions">
+        <span id="auth-status-dot" class="status-dot"></span>
+        <button id="aller_log_btn">Log In / Sign Up</button>
+      </div>
+    </nav>
+    <h2 class="section-title">🔥 Tendances du jour</h2>
+    <h2 class="search-title" style="display : none">Résultats de recherche :</h2>
+    <div id="movies_grid"></div>
+    <div id="movie-details-section" style="display: none"></div>
+  </div>
 
-    <button id = "login-btn">Se connecter</button>
-    <button id = "signup-btn">S'inscrire</button>
-    <button id = "retour-btn">Retour</button>
+  <div id="auth-section" style="display : none;">
+    <h2>Espace Utilisateur</h2>
+
+    <input type="email" id="auth-email" placeholder="adresse email">
+    <input type="password" id="auth-password" placeholder="mot de passe">
+
+    <button id="login-btn">Se connecter</button>
+    <button id="signup-btn">S'inscrire</button>
+    <button id="retour-btn">Retour</button>
     <br>
 
-    </div>
+  </div>
 
-    <div id="message_r" class="message-box-r" style = "display : none">
-    <p>Vous êtes maintenant connecter au CinéGOAT !</p>
+  <div id="message_r" class="message-box-r" style="display : none">
+    <p>Vous êtes maintenant connecté au CinéGOAT !</p>
     <button id="fermer-message-r">&times;</button>
-    </div>
-    <div id="message_e" class="message-box-e" style = "display : none">
+  </div>
+  <div id="message_e" class="message-box-e" style="display : none">
     <p>Erreur lors de l'inscription/connexion veuillez réessayer !</p>
     <button id="fermer-message-e">&times;</button>
-    </div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
 </html>
