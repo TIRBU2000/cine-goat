@@ -1,6 +1,6 @@
 import "./style.css";
 import { auth, db } from "./config/firebase.js";
-import { createMovieCard } from "./components/moviecard.js";
+import { createMovieCard } from "./components/movieCard.js";
 import {
   getTrendingMovies,
   searchMovies,
