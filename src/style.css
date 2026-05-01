@@ -401,3 +401,90 @@ body {
   color: var(--text-main);
   text-decoration: underline;
 }
+
+.critic-zone {
+  margin-top: 2rem;
+  padding-top : 1.5rem;
+  border-top : 1px solid var(--surface-color); /* Ligne de séparation subtile */
+}
+
+#critic-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  /* On utilise la couleur de surface pour faire ressortir le formulaire */
+  background-color: var(--surface-color); 
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+#critic-form label {
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+#critic-note {
+  padding: 0.8rem;
+  border-radius: 8px;
+  /* On creuse l'input avec la couleur de fond générale */
+  background-color: var(--bg-color); 
+  color: var(--text-main);
+  border: 1px solid #334155;
+  font-family: var(--font-main);
+  font-size: 1rem;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+#critic-note:focus {
+  border-color: var(--primary-color);
+}
+
+#critic-text {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 120px;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  border: 1px solid #334155;
+  font-family: var(--font-main);
+  font-size: 1rem;
+  resize: vertical; /* Permet d'agrandir la zone de haut en bas uniquement */
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+#critic-text:focus {
+  border-color: var(--primary-color);
+  /* Ajoute un petit halo lumineux bleu très pro quand on tape au clavier */
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); 
+}
+
+#critic-submit {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border: none;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  font-family: var(--font-main);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  margin-top: 0.5rem;
+}
+
+#critic-submit:hover {
+  background-color: var(--primary-hover);
+  filter: brightness(0.9);
+  transform: translateY(-2px); /* Petit effet de soulèvement */
+}
+
+#critic-submit:active {
+  transform: translateY(0); /* Le bouton redescend quand on clique physiquement dessus */
+}

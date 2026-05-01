@@ -20,6 +20,28 @@ export function createMovieDetails(movie) {
         </div>
       </div>
     </div>
+    <div class="critic-zone">
+      <h1>Poster une critique :</h1>
+      <form data-movie-id="${movie.id}" id="critic-form" >
+        <label for="note-select">
+          Choisissez la note mise au film :
+        </label>
+        <select id="critic-note" name="note-select">
+          <option value="1">⭐</option>
+          <option value="2">⭐⭐</option>
+          <option value="3">⭐⭐⭐</option>
+          <option value="4">⭐⭐⭐⭐</option>
+          <option value="5">⭐⭐⭐⭐⭐</option>
+        </select>
+        <label for="critic-text">
+          Rédigez votre critique :
+        </label>
+        <textarea name="critic-text" id="critic-text" placeholder="Écrivez ici votre critique" required></textarea>
+        <button type="submit" id="critic-submit">
+          Poster la critique
+        </button>
+      </form>
+    </div>
   `;
   return detailsSection;
 }
